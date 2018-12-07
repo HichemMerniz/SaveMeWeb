@@ -36,7 +36,7 @@ class emergencyLocation extends Controller
         return response()->json(['status'=>'Sending help']);
     }
 public function ambuPosiReq(Request $request){
-    $json = $request->json;
+    $json = json_decode($request->json);
     $id = $json->id;
     $ambi =  DB::table('ambulance')->where('code_hopital',$id)->first();
     return response()->json(['position'=>$ambi->position]);
