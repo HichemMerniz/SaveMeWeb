@@ -6,6 +6,7 @@
     <title>SaveMe</title>
     <meta name="description" content="A high-quality &amp; free Bootstrap admin dashboard template pack that comes with lots of templates and components.">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="{{asset('assets/img/avatars/monkid.jpg')}}">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -81,6 +82,7 @@
             <nav class="navbar align-items-stretch navbar-light bg-white flex-md-nowrap border-bottom p-0">
               <a class="navbar-brand w-100 mr-0" href="#" style="line-height: 25px;">
                 <div class="d-table m-auto">
+                  <img src="{{asset('assets/img/avatars/monkid.jpg')}}" style="height: 50px;    padding-inline-end: 32px;" alt="">
                   <span class="d-none d-md-inline ml-1">Al Mounkid</span>
                 </div>
               </a>
@@ -110,6 +112,12 @@
                 <a class="nav-link " href="/mapview">
                   <i class="material-icons">map</i>
                   <span>Map View</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " href="/doctors">
+                  <i class="material-icons">account_box</i>
+                  <span>Doctors</span>
                 </a>
               </li>
             </ul>

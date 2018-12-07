@@ -17,5 +17,8 @@
  Route::get('/mapview', function () {
     return view('mapview');
 });
+Route::get('/doctors', function () {
+    return view('doctor');
+});
 Route::get('/emer','emergencyLocation@saveLocation');
 //Route::get('/','DoctorController@index');
