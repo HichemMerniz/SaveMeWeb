@@ -15,11 +15,11 @@ class CreateDoctorsTable extends Migration
     {
         Schema::create('doctors', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('img_doc'); 
+            $table->longText('img_doc'); 
             $table->string('first_name',255); 
             $table->string('last_name',255);
             $table->string('phone',25);
-            $table->integer('status',2);       
+            $table->integer('status')->unsigned();       
             $table->timestamps();
         });
     }
