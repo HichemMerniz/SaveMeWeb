@@ -35,16 +35,21 @@ class emergencyLocation extends Controller
         
         return response()->json(['status'=>'Sending help']);
     }
-
+public function ambuPosiReq(Request $request){
+    $json = $request->json;
+    $id = $json->id;
+    $ambi =  DB::table('ambulance')->where('code_hopital',$id)->first();
+    return response()->json(['position'=>$ambi->position]);
+}
     public function ambuPosi(Request $request){
-        $posi = $request->posi;
-        $distance = $request->dist;
+        $posi = $request->position;
+        $distance = $request->distance;
         $id = $request->id;
         $ambu =DB::table('ambulance')
-        ->where('code_medical', $id)->get();
+        ->where('code_hopital', $id)->get();
         if($ambu->count()> 0){
         DB::table('ambulance')
-        ->where('code_medical', $id)
+        ->where('code_hopital', $id)
         ->update(['position' =>$posi,"distance"=>$distance]); 
         }else{
 ambulance::create([

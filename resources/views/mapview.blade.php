@@ -11,11 +11,12 @@ $lon = $position[1];
 <div class="row">
               <!-- Discussions Component -->
               <div class="col-lg-5 col-md-12 col-sm-12 mb-4">
-              <form method="post" id="theForm">
+              <form method="post" id="theForm" action="ambuPosi">
   <input type="hidden" name="_token" value="{{csrf_token()}}" />
   <input type="hidden" id="position" name="position" value="" />
-<input type="hidden" name="distance" value="" />
+<input type="hidden" name="distance" id="distance" value="" />
 <input type="hidden" name="id" value="2e96a1741143f617" />
+<input type="submit" >
 </form>
  <div style="width: 640px; height: 480px" id="map"></div>
   <script>
@@ -24,6 +25,8 @@ $lon = $position[1];
     'app_id': 'BsNhpmthkn0bMKGMMMV7',
     'app_code': 'AMDCR2_HijeOSo4pjRvjiw'
     });
+    var hosLa = null;
+    var hosLon = null;
     var map = new H.Map(document.getElementById('map'),
       platform.createDefaultLayers().normal.map, {
       center: {lat:<?php echo $lat; ?> , lng: <?php echo $lon; ?>},
@@ -56,9 +59,9 @@ $lon = $position[1];
     // Define a callback function to handle data on success:
     function onResult(data) {
       var str = JSON.stringify(data.results);
-      console.dir(data.results.items[0]);
+      document.getElementById('distance').value = data.results.items[0].distance;
       addPlacesToMap(data.results);
-      route(<?php echo $lat?>,<?php echo $lon ?>,data.results.items[0]);
+      route(<?php echo $lat?>,<?php echo $lon ?>,data.results.items[0].position[0],data.results.items[0].position[1]);
     }
 
     // Define a callback function to handle errors:
@@ -76,12 +79,12 @@ $lon = $position[1];
       return marker;
       }));
     }
-    function route(lat,lon, data){
+    function route(lat,lon, hosLa,hosLon){
       var routingParameters = {
   // The routing mode:
   'mode': 'fastest;car',
   // The start point of the route:
-  'waypoint0': 'geo!'+data.position[0]+','+data.position[1],
+  'waypoint0': 'geo!'+hosLa+','+hosLon,
   // The end point of the route:
   'waypoint1': 'geo!'+lat+','+lon,
   // To retrieve the shape of the route we choose the route
@@ -101,8 +104,7 @@ var onResult = function(result) {
   route = result.response.route[0];
   // Pick the route's shape:
   routeShape = route.shape;
-
-
+  Simule(routeShape);
   // Create a linestring to use as a point source for the route line
   linestring = new H.geo.LineString();
 
@@ -152,21 +154,28 @@ router.calculateRoute(routingParameters, onResult,
     alert(error.message);
   });
     }
+    function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function Simule(routeShape){
+  for(var i = 0; i<routeShape.length;i++){
+document.getElementById("position").value = routeShape[i];
+await sleep(2000);
+console.log("sleeping");
+
+}
+}
 
     // Run a search request with parameters, headers (empty), and
     // callback functions:
     search.request(params, {}, onResult, onError);
-      function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-async function Simule(){
-      for(var i = 0; i<routeShape.length;i++){
-document.getElementById("position").value = routeShape[i];
-await sleep(5000);
-}
-}
+     
 
-Simule();
+     
+
+
+
 
  setInterval(function getMessage(){
           $.ajaxSetup({
