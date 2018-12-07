@@ -86,6 +86,11 @@
 
  <div style="width: 640px; height: 480px" id="map"></div>
   <script>
+
+
+//todo dont forget to get positions from user
+
+
     // Initialize the platform object:
     var platform = new H.service.Platform({
     'app_id': 'BsNhpmthkn0bMKGMMMV7',
@@ -122,8 +127,7 @@
 
     // Define a callback function to handle data on success:
     function onResult(data) {
-      var str = JSON.stringify(data.results);
-      console.dir(data.results.items[0]);
+      
       addPlacesToMap(data.results);
       route(36.0735,4.7547,data.results.items[0]);
     }
@@ -167,8 +171,9 @@ var onResult = function(result) {
   // Pick the first route from the response:
   route = result.response.route[0];
   // Pick the route's shape:
+  console.dir(route);
   routeShape = route.shape;
-
+SimulePosiUrg(route);
   // Create a linestring to use as a point source for the route line
   linestring = new H.geo.LineString();
 
@@ -218,6 +223,16 @@ router.calculateRoute(routingParameters, onResult,
     alert(error.message);
   });
     }
+    const sleep = (milliseconds) => {
+  return new Promise(resolve => setTimeout(resolve, milliseconds));
+}
+async function SimulePosiUrg(data){
+for(var i = 0; i<data.shape.length;i++){
+  await sleep(Math.floor(Math.random() * 3000) + 500);
+    console.log("posi",data.shape[i]);
+}
+//dont forget to send them back to user
+}
 
     // Run a search request with parameters, headers (empty), and
     // callback functions:
