@@ -11,7 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('accueil');
+ Route::get('/', function () {
+     return view('accueil');
+ });
+ Route::get('/mapview', function () {
+    return view('mapview');
 });
 Route::get('/emer','emergencyLocation@saveLocation');
+//Route::get('/','DoctorController@index');

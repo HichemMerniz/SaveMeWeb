@@ -101,13 +101,13 @@
           <div class="nav-wrapper">
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link active" href="index.html">
+                <a class="nav-link" href="/">
                   <i class="material-icons">home</i>
                   <span>Accueil</span>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link " href="">
+                <a class="nav-link " href="/mapview">
                   <i class="material-icons">map</i>
                   <span>Map View</span>
                 </a>
