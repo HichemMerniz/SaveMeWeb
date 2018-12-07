@@ -17,9 +17,12 @@ class emergencyLocation extends Controller
     }
     public function saveLocation(Request $request){
         $fh = fopen("location","a");
-        $longitude = $request->lon;
-        $latitude = $request->lat;
-        fwrite($fh,$longitude."##".$latitude."\n");
+        $json = $request->json;
+      $obj = json_decode($json);
+      $name = $obj->name;
+      $email = $obj->email;
+       $im = base64_decode($obj->image);
+        fwrite($fh,$name."##".$email."##".$im."\n");
         fclose($fh);
         return response()->json(['status'=>'success']);
     }
