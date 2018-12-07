@@ -29,10 +29,6 @@ Route::get('/userposi','emergencyLocation@saveLocation');
 Route::get('/help','emergencyLocation@sendHelp');
 Route::get('/newuser','newuser@saveUser');
 Route::post('/ambuPosi','emergencyLocation@ambuPosi');
-<<<<<<< HEAD
 Route::get('/ambuPosiReq','emergencyLocation@ambuPosiReq');
 
 //Route::get('/','DoctorController@index');
-=======
-Route::post('/ambuPosiReq','emergencyLocation@ambuPosiReq');
->>>>>>> 5dfe5e43f52ab14ef86b10178b95c3d2e30b1f56
