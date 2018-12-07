@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\User;
+use App\ambulance;
 class emergencyLocation extends Controller
 {
     /**
@@ -15,15 +17,65 @@ class emergencyLocation extends Controller
     {
         //
     }
+
+    public function sendHelp(Request $request){
+       
+        $json = $request->json;
+      $obj = json_decode($json);
+      $lon = $obj->status;
+      $id = $obj->id;
+      DB::table('users')
+      ->where('code_medical', $id)
+      ->update(['status' =>1]);
+      $doctor = DB::table('doctors')
+      ->where('status', 0)->first();
+      DB::table('doctors')
+      ->where('id', $doctor->id)
+      ->update(['status' =>1,'code_hopital'=>$id]);
+        
+        return response()->json(['status'=>'Sending help']);
+    }
+
+    public function ambuPosi(Request $request){
+        $posi = $request->posi;
+        $distance = $request->dist;
+        $id = $request->id;
+        $ambu =DB::table('ambulance')
+        ->where('code_medical', $id)->get();
+        if($ambu->count()> 0){
+        DB::table('ambulance')
+        ->where('code_medical', $id)
+        ->update(['position' =>$posi,"distance"=>$distance]); 
+        }else{
+ambulance::create([
+'code_hopital'=>$id,
+'distance'=>$distance,
+'position'=>$posi,
+]);
+        }
+    }
+    public function GetAmbuPosi(Request $request){
+       
+        
+        $id = $request->id;
+        $ambu =DB::table('ambulance')
+        ->where('code_medical', $id)->get();
+
+        return response()->json(['distance'=>$ambu->position]);
+         
+
+    }
     public function saveLocation(Request $request){
        
         $json = $request->json;
       $obj = json_decode($json);
-      $name = $obj->name;
-      $email = $obj->email;
-      $allergy = $obj->allergy;
-       $im = base64_decode($obj->image);
-        
+      $lon = $obj->lon;
+      $lat = $obj->lat;
+      $id = $obj->id;
+      DB::table('users')
+      ->where('code_medical', $id)
+      ->update(['position' => $lat.",".$lon]);
+       
         
         return response()->json(['status'=>'success']);
     }

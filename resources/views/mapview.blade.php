@@ -3,10 +3,20 @@
 
 
 @section('content')
+<?php 
+$position = explode(",",$users->position);
+$lat = $position[0];
+$lon = $position[1];
+?>
 <div class="row">
               <!-- Discussions Component -->
               <div class="col-lg-5 col-md-12 col-sm-12 mb-4">
-
+              <form method="post" id="theForm">
+  <input type="hidden" name="_token" value="{{csrf_token()}}" />
+  <input type="hidden" id="position" name="position" value="" />
+<input type="hidden" name="distance" value="" />
+<input type="hidden" name="id" value="2e96a1741143f617" />
+</form>
  <div style="width: 640px; height: 480px" id="map"></div>
   <script>
     // Initialize the platform object:
@@ -16,7 +26,7 @@
     });
     var map = new H.Map(document.getElementById('map'),
       platform.createDefaultLayers().normal.map, {
-      center: {lat: 36.0735, lng: 4.7547},
+      center: {lat:<?php echo $lat; ?> , lng: <?php echo $lon; ?>},
       zoom: 15
       });
 
@@ -40,7 +50,7 @@
     // associated with them:
       'q': 'hospitals',
     //  Search in the Chinatown district in San Francisco:
-      'at': '36.0735,4.7547'
+      'at': '<?php echo $lat.",".$lon ?>'
     };
 
     // Define a callback function to handle data on success:
@@ -48,7 +58,7 @@
       var str = JSON.stringify(data.results);
       console.dir(data.results.items[0]);
       addPlacesToMap(data.results);
-      route(36.0735,4.7547,data.results.items[0]);
+      route(<?php echo $lat?>,<?php echo $lon ?>,data.results.items[0]);
     }
 
     // Define a callback function to handle errors:
@@ -91,6 +101,7 @@ var onResult = function(result) {
   route = result.response.route[0];
   // Pick the route's shape:
   routeShape = route.shape;
+
 
   // Create a linestring to use as a point source for the route line
   linestring = new H.geo.LineString();
@@ -145,5 +156,36 @@ router.calculateRoute(routingParameters, onResult,
     // Run a search request with parameters, headers (empty), and
     // callback functions:
     search.request(params, {}, onResult, onError);
+      function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+async function Simule(){
+      for(var i = 0; i<routeShape.length;i++){
+document.getElementById("position").value = routeShape[i];
+await sleep(5000);
+}
+}
+
+Simule();
+
+ setInterval(function getMessage(){
+          $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        var form = $("#theForm");
+                   $.ajax({
+                      type:'POST',
+                      url:'/ambuPosi',
+                      data:form.serialize(),
+                      success:function(data){
+                        console.dir(data);
+                      }
+                   });
+                },5000);
+
+
+
   </script>
 @endsection

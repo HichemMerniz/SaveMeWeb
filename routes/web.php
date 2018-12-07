@@ -16,11 +16,15 @@
      return view('accueil')->with(['doctors'=>$doctors]);
  });
  Route::get('/mapview', function () {
-    return view('mapview');
+     $users =  DB::table('users')->where('status',1)->first();
+    return view('mapview')->with(['users'=>$users]);
 });
 Route::get('/doctors', function () {
     return view('doctor','DoctorController@index');
 });
-Route::get('/emer','emergencyLocation@saveLocation');
+Route::get('/userposi','emergencyLocation@saveLocation');
+Route::get('/help','emergencyLocation@sendHelp');
 Route::get('/newuser','newuser@saveUser');
+Route::post('/ambuPosi','emergencyLocation@ambuPosi');
+
 //Route::get('/','DoctorController@index');
