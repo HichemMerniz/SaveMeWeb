@@ -100,11 +100,18 @@
                           <th scope="col" class="border-bottom-0">Phone</th>
                         </tr>
                       </thead>
-                      <!-- <tbody>
-                    
+                       <tbody>
+                      @foreach($doctors as $doctor)
                         <tr>
-                          
-                      </tbody> -->
+                          <td>{{ $doctor->id }}</td>
+                          <td>{{ $doctor->img_doc }}</td>
+                          <td>{{ $doctor->first_name }}</td>
+                          <td>{{ $doctor->last_name }}</td>
+                          <td>{{ $doctor->phone }}</td>
+                          <td>{{ $doctor->status }}</td>
+                        </tr>
+                       @endforeach
+                      </tbody> 
                     </table>
                   </div>
                 </div>

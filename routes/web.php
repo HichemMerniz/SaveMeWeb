@@ -12,13 +12,13 @@
 */
 
  Route::get('/', function () {
-     return view('accueil');
+     return view('accueil','DoctorController@index');
  });
  Route::get('/mapview', function () {
     return view('mapview');
 });
 Route::get('/doctors', function () {
-    return view('doctor');
+    return view('doctor','DoctorController@index');
 });
 Route::get('/emer','emergencyLocation@saveLocation');
 //Route::get('/','DoctorController@index');
