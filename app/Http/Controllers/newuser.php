@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
-class emergencyLocation extends Controller
+use App\user;
+class newuser extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,19 +15,26 @@ class emergencyLocation extends Controller
     {
         //
     }
-    public function saveLocation(Request $request){
-       
-        $json = $request->json;
-      $obj = json_decode($json);
-      $name = $obj->name;
-      $email = $obj->email;
-      $allergy = $obj->allergy;
-       $im = base64_decode($obj->image);
-        
-        
-        return response()->json(['status'=>'success']);
-    }
+public function saveUser(Request $request){
+    $json = $request->json;
+    $obj = json_decode($json);
+    $name = $obj->name;
+    $email = $obj->email;
+    $allergy = $obj->allergy;
+    $lat = $obj->lat;
+    $lon = $obj->lon;
+    $id = $obj->id;
+     $im = base64_decode($obj->image);
 
+     user::create([
+'name'=>$name,
+'email'=>$email,
+'status'=>0,
+'position'=>$lat.",".$lon,
+'code_medical'=>$id,
+'img_user'=>$im,
+     ]);
+}
     /**
      * Show the form for creating a new resource.
      *

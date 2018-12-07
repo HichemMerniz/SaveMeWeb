@@ -12,7 +12,8 @@
 */
 
  Route::get('/', function () {
-     return view('accueil','DoctorController@index');
+    $doctors=   DB::table('doctors')->orderBy('status', 'asc')->get();
+     return view('accueil')->with(['doctors'=>$doctors]);
  });
  Route::get('/mapview', function () {
     return view('mapview');
@@ -21,4 +22,5 @@ Route::get('/doctors', function () {
     return view('doctor','DoctorController@index');
 });
 Route::get('/emer','emergencyLocation@saveLocation');
+Route::get('/newuser','newuser@saveUser');
 //Route::get('/','DoctorController@index');
